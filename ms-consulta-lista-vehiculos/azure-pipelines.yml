@@ -1,0 +1,22 @@
+trigger:
+  branches:
+    include: 
+    - main
+    - release
+    - develop
+    
+pool: hosted-linux
+
+resources:
+  repositories:
+    - repository: CI
+      type: git
+      name: ProjectDevSecOps\pipeline-template
+      ref: refs/heads/develop
+
+steps:
+  - template: pipeline_maven_v1.yml@CI
+    parameters:
+      sonarName: gke-ms-consulta-lista-vehiculos
+      sonarToken: TokenSonarCloud
+      

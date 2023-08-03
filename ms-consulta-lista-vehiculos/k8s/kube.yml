@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  labels: 
+    app: ms-consulta-lista-vehiculos
+  name: ms-consulta-lista-vehiculos
+  namespace: masterlub-ENV_DEPLOY
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: ms-consulta-lista-vehiculos
+  template: 
+    metadata: 
+      labels: 
+        app: ms-consulta-lista-vehiculos
+    spec: 
+      containers: 
+        - 
+          image: "IMAGE_TAG"
+          imagePullPolicy: Always
+          volumeMounts:
+          - name: secret-vol
+            mountPath: "/opt/secret"
+          name: ms-consulta-lista-vehiculos
+          envFrom:
+          - configMapRef:
+              name: ms-consulta-lista-vehiculos-properties
+          - secretRef:
+              name: ms-consulta-lista-vehiculos-secret
+          ports: 
+            - 
+              containerPort: 8080
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 70
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 2
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 70
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 2	
+          resources:
+            requests:
+              memory: MEMORY_REQUEST
+              cpu: CPU_REQUEST
+            limits:
+              memory: MEMORY_LIMIT
+              cpu: CPU_LIMIT
+      restartPolicy: Always
+      volumes:
+      - name: secret-vol
+        secret:
+          secretName: secret-sa-ENV_DEPLOY
+          items:
+          - key: sa-terpel-gtic-gke-ENV_DEPLOY.json
+            path: sa-terpel-gtic-gke-ENV_DEPLOY.json
+---
+################################# Service - ClusterIp
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  labels: 
+    app: ms-consulta-lista-vehiculos
+  name: ms-consulta-lista-vehiculos
+  namespace: masterlub-ENV_DEPLOY
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  ports:
+    - port: 8080
+      name: http
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ms-consulta-lista-vehiculos
+  type: NodePort
+---
+################################# HPA - Horizontal Pods Autoscaler
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa ms-consulta-lista-vehiculos
+  namespace: masterlub-ENV_DEPLOY
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ms-consulta-lista-vehiculos
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 70

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: ms-consulta-lista-vehiculos
+  cloud:
+    gcp:
+      credentials:
+        location: file:${SA_DATALAKE_CREDENTIALS}
+service:
+  dateFormat: yyyy-MM-dd hh:mm:ss
+  controller:
+    path: /listasVehiculo/v1.0
+server:
+  port: ${PUERTO}
+data:
+  projectId: ${PROJECT_ID}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ms-consulta-lista-vehiculos-properties
+  namespace: masterlub-ENV_DEPLOY
+  labels:
+    app: ms-consulta-lista-vehiculos
+data:
+  GCP_APP_CREDENTIALS: "/opt/secret/sa-terpel-gtic-gke-ENV_DEPLOY.json"
+  PUERTO: "8080"
+  SA_DATALAKE_CREDENTIALS: "/opt/secret-sa-datalake/sa-terpel-gtic-datalake-ENV_DEPLOY.json"
+  PROJECT_ID: "terpel-gtic-datalake"

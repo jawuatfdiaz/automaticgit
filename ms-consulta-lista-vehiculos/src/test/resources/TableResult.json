@@ -1,0 +1,50 @@
+{
+  "schema" : {
+    "fields" : [ {
+      "name" : "dup_count",
+      "type" : {
+        "standardType" : "INT64"
+      },
+      "subFields" : null,
+      "mode" : "NULLABLE",
+      "description" : null,
+      "policyTags" : null,
+      "maxLength" : null,
+      "scale" : null,
+      "precision" : null,
+      "defaultValueExpression" : null
+    }, {
+      "name" : "Vehiculos_por_Marca",
+      "type" : {
+        "standardType" : "STRING"
+      },
+      "subFields" : null,
+      "mode" : "NULLABLE",
+      "description" : null,
+      "policyTags" : null,
+      "maxLength" : null,
+      "scale" : null,
+      "precision" : null,
+      "defaultValueExpression" : null
+    }, {
+      "name" : "Name",
+      "type" : {
+        "standardType" : "STRING"
+      },
+      "subFields" : null,
+      "mode" : "NULLABLE",
+      "description" : null,
+      "policyTags" : null,
+      "maxLength" : null,
+      "scale" : null,
+      "precision" : null,
+      "defaultValueExpression" : null
+    } ]
+  },
+  "totalRows" : 1,
+  "values" : {
+    "empty" : false
+  },
+  "nextPage" : null,
+  "nextPageToken" : null
+}

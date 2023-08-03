@@ -1,0 +1,21 @@
+// Jenkinsfile used for a simple update-deployment of a microservice
+// install.sh must be issued first
+pipeline {
+    agent any
+    stages {
+        stage('Deploy/Update ms-card dev') {
+            steps{
+                
+                step([$class: 'KubernetesEngineBuilder', 
+                        projectId: "terpel-gtic-gke-dev",
+                        clusterName: "cludevgke01",
+                        zone: "us-east1",
+                        manifestPattern: 'k8s/kube.yml',
+                        credentialsId: 'terpel-dcem-appterpel-dev',
+                        verifyDeployments: true])
+                
+            }
+        }
+        
+    }
+}

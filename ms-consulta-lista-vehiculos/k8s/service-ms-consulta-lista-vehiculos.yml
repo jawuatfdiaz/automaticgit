@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+
+  labels:
+    run: ms-consulta-lista-vehiculos
+  name: ms-consulta-lista-vehiculos
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/ms-consulta-lista-vehiculos
+
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - nodePort: 31767
+    port: 9020
+    protocol: TCP
+    targetPort: 9020
+  selector:
+    run: ms-consulta-lista-vehiculos
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
